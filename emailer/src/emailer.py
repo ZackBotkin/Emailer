@@ -18,9 +18,12 @@ class Emailer(object):
     def send_text(self, email_address, email_text):
         self.server.sendmail(email_address, email_address, email_text)
 
-    def send_file(self, recipient, sender, path):
+    def send_file(self, recipient, sender, path, subject=None):
         msg = EmailMessage()
-        msg["Subject"] = "SUBJECT"
+        if subject is not None:
+            msg["Subject"] = subject
+        else:
+            msg["Subject"] = "Sent from Emailer"
         msg["To"] = recipient
         msg["From"] = sender
         with open(path, 'rb') as fp:
